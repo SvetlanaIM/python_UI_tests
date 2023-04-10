@@ -12,13 +12,16 @@ class LoginPageLocators():
     REGISTER_FORM = (By.ID, "register_form")
 
 
-class AddToBasketLocators():
+class BasketLocators():
     BASKET_BUTTON = (By.CLASS_NAME, "btn-add-to-basket")
     PRODUCT_NAME = (By.CSS_SELECTOR, ".product_main h1")
     PRODUCT_PRICE = (By.CSS_SELECTOR, ".product_main p")
     PRODUCT_NAME_IN_BASKET = (By.CSS_SELECTOR, "#messages strong")
     PRODUCT_PRICE_IN_BASKET = (By.CSS_SELECTOR, ".alertinner p strong")
     SUCCESS_MESSAGE = (By.CSS_SELECTOR, "#messages .alertinner")
+    GO_TO_BASKET = (By.CSS_SELECTOR, ".basket-mini .btn:first-child")
+    EMPTY_BASKET = (By.XPATH, "//div[@id='content_inner']/p")
+    SOME_PRODUCTS_IN_BASKET = (By.CSS_SELECTOR, ".row h2")
 
 
 class BasePageLocators():

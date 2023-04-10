@@ -1,6 +1,6 @@
 import time
 import pytest
-from .pages.locators import AddToBasketLocators
+from .pages.locators import BasketLocators
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 

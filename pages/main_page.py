@@ -1,15 +1,12 @@
 # создаем page object для главной страницы сайта
-from selenium.webdriver.common.by import By
-from .locators import MainPageLocators      # импортируем локаторы в мейн пейдж
-
-from .base_page import BasePage # чтобы импортировать, нужно ставить точку
+from .base_page import BasePage     # чтобы импортировать, нужно ставить точку
 
 
 class MainPage(BasePage):  # наследуемся, чтобы получить конструктор + методы базовой страницы
     def __init__(self, *args, **kwargs):
         super(MainPage, self).__init__(*args, **kwargs)
-    # делаем заглушку - будет просто вызывать конструктор предка и передавать ему те же значения
-    # наверняка просто с pass также бы работало
+    # делаем заглушку - будет просто вызывать конструктор предка и передавать те же значения
+
 
 
 

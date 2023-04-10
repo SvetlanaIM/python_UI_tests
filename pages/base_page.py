@@ -1,26 +1,26 @@
 from selenium.common.exceptions import NoSuchElementException, \
     TimeoutException  # импортируем ошибку, которую будем отлавливать
-from selenium.common.exceptions import NoAlertPresentException # в начале файла
+from selenium.common.exceptions import NoAlertPresentException  # в начале файла
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from .locators import BasePageLocators
-
 from .locators import BasketLocators
 import math
-class BasePage(): # базовая страница, от которой будут унаследованы все остальные классы
 
-    def __init__(self, browser, url, timeout=10):   # будем создавать объекты с браузером и ссылкой
+
+class BasePage():  # базовая страница, от которой будут унаследованы все остальные классы
+
+    def __init__(self, browser, url, timeout=10):  # будем создавать объекты с браузером и ссылкой
         self.browser = browser
         self.url = url
-        self.browser.implicitly_wait(timeout)    # Добавляем, чтобы для каждой page ждал по несколько секунд
+        self.browser.implicitly_wait(timeout)  # Добавляем, чтобы для каждой page ждал по несколько секунд
 
-    def open(self):     # метод, с помощью которого будем открывать страницу
+    def open(self):  # метод, с помощью которого будем открывать страницу
         self.browser.get(self.url)
 
-
-    def is_element_present(self, how, what):    # метод, проверяющий, есть ли элемент на странице
+    def is_element_present(self, how, what):  # метод, проверяющий, есть ли элемент на странице
         try:
-            self.browser.find_element(how, what)
+            WebDriverWait(self.browser, 10).until(expected_conditions.presence_of_element_located((how, what)))
         except NoSuchElementException:
             return False
         return True
@@ -47,8 +47,8 @@ class BasePage(): # базовая страница, от которой буд�
 
         return False
 
-    def is_disappeared(self, how, what, timeout=4):     # проверяем, что на странице какой-либо элемент исчезает
-        try:    # 1 - частота запроса (каждую секунду в течение 4 секунд проверяет) TimeoutExceptions - ignored_exceptions, здесь просто для наглядности*
+    def is_disappeared(self, how, what, timeout=4):  # проверяем, что на странице какой-либо элемент исчезает
+        try:  # 1 - частота запроса (каждую секунду в течение 4 секунд проверяет) TimeoutExceptions - ignored_exceptions, здесь просто для наглядности*
             WebDriverWait(self.browser, timeout, 1, TimeoutException). \
                 until_not(expected_conditions.presence_of_element_located((how, what)))
         except TimeoutException:
@@ -56,15 +56,20 @@ class BasePage(): # базовая страница, от которой буд�
 
         return True
 
-    def go_to_login_page(self): # идем на страницу с логином (сначала для проверки делаем отрицательный тест)
+    def go_to_login_page(self):  # идем на страницу с логином (сначала для проверки делаем отрицательный тест)
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
 
-    def should_be_login_link(self):     # если что-то пойдет не так, будет выдавать понятную ошибку
+    def should_be_login_link(self):  # если что-то пойдет не так, будет выдавать понятную ошибку
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
 
     def should_be_basket_link(self):
         assert self.is_element_present(*BasketLocators.GO_TO_BASKET), "there is no button 'basket' on the page"
+
     def go_to_basket_page(self):
         basket_link = self.browser.find_element(*BasketLocators.GO_TO_BASKET)
         basket_link.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"

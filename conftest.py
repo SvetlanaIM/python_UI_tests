@@ -1,17 +1,16 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 
 
-def pytest_addoption(parser):       # настраиваем выбор браузера и языка
+def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: chrome or firefox")
     parser.addoption(
         '--language',
         action='store',
-        default='en',  # или default=None,
+        default='en',
         help='Language'
     )
 
@@ -25,7 +24,8 @@ def browser(request):
         print("\nstart chrome browser for test..")
         options = webdriver.ChromeOptions()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-        browser = webdriver.Chrome(options=options)
+        service = Service(executable_path=ChromeDriverManager().install())
+        browser = webdriver.Chrome(service=service, options=options)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         options = webdriver.FirefoxOptions()

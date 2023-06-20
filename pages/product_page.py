@@ -4,12 +4,12 @@ from .locators import BasketLocators
 
 class ProductPage(BasePage):
 
-    def add_product_to_basket(self):  # добавляем товар в корзину
+    def add_product_to_basket(self):
         self.should_be_button()
         button = self.browser.find_element(*BasketLocators.BASKET_BUTTON)
         button.click()
 
-    def should_be_button(self):  # проверяем, есть ли кнопка добавления товара в корзину
+    def should_be_button(self):
         assert self.is_element_present(
             *BasketLocators.BASKET_BUTTON), "There is no AddToBusket button on the page or it's not found"
 
@@ -22,10 +22,10 @@ class ProductPage(BasePage):
             *BasketLocators.PRODUCT_PRICE_IN_BASKET).text, f'the price doesn\'t match on page {link}'
 
     def should_not_be_success_message(
-            self):  # проверяем, что на странице нет сообщения о том, что товар добавлен в корзину
+            self):
         assert self.is_not_element_present(*BasketLocators.SUCCESS_MESSAGE), \
             "Success message is presented, but should not be"
 
-    def success_message_should_disappear(self):  # проверяем, ушло ли сообщение на странице
+    def success_message_should_disappear(self):
         assert self.is_disappeared(
             *BasketLocators.SUCCESS_MESSAGE), "The success message didn't disappear, but it should have"

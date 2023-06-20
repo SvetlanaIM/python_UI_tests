@@ -1,8 +1,6 @@
 from selenium.webdriver.common.by import By
 
 
-# сюда будем добавлять все локаторы!
-
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
 

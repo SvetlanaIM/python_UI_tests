@@ -1,3 +1,4 @@
 __pycache__/
 __init__.py
 pages/__pycache__/
+geckodriver.log

@@ -6,7 +6,7 @@
 
 #### To run the tests locally, follow these steps:
 1.	Clone the project repository.
-2.	Open the "python_api" directory.
+2.	Open the repository's directory.
 3.	Install the required dependencies:
 ```
 pip install --no-cache-dir -r requirements.txt
